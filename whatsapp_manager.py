@@ -42,6 +42,17 @@ class WhatsAppManager:
         chrome_options.add_argument("--window-size=1280,720")
         chrome_options.add_argument(f"user-data-dir={self.session_dir}")
 
+        # Optimisations extrêmes pour réduire la consommation RAM sur Render (limite 512Mo)
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-software-rasterizer")
+        chrome_options.add_argument("--disable-site-isolation-trials")
+        chrome_options.add_argument("--disable-features=TranslateUI,BlinkGenPropertyTrees")
+        chrome_options.add_argument("--disable-background-networking")
+        chrome_options.add_argument("--disable-sync")
+        chrome_options.add_argument("--metrics-recording-only")
+        chrome_options.add_argument("--no-first-run")
+        chrome_options.add_argument("--safebrowsing-disable-auto-update")
+        
         # Masquer l'automatisation pour éviter le blocage
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
