@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libglib2.0-0 \
     libnss3 \
-    libgconf-2-4 \
     libfontconfig1 \
     libxrender1 \
     libxext6 \
@@ -26,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     libxi6 \
     libxtst6 \
     fonts-liberation \
-    libappindicator3-1 \
+    libayatana-appindicator3-1 \
     xdg-utils \
     libasound2 \
     && rm -rf /var/lib/apt/lists/*
