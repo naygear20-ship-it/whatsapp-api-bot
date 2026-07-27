@@ -108,6 +108,17 @@ class WhatsAppManager:
             if self.is_connected:
                 return None # Déjà connecté, pas de QR code
                 
+            # Vérifier si le QR code a expiré et cliquer sur recharger
+            try:
+                refresh_btn = self.driver.find_elements(By.XPATH, "//span[@data-icon='refresh'] | //button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'reload')] | //button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'actualiser')]")
+                if refresh_btn:
+                    logger.info("QR code expiré, clic pour recharger...")
+                    # Utiliser JS pour cliquer au cas où l'élément est superposé
+                    self.driver.execute_script("arguments[0].click();", refresh_btn[0])
+                    time.sleep(2)
+            except Exception as e:
+                pass
+
             # Attendre que le canvas soit présent
             canvas = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "canvas"))
