@@ -56,6 +56,21 @@ def get_qr():
         
     return Response(content=img_data, media_type="image/png")
 
+@app.get("/screenshot", responses={
+    200: {
+        "content": {"image/png": {}}
+    }
+})
+def get_screenshot():
+    if not whatsapp_manager:
+        raise HTTPException(status_code=503, detail="Le gestionnaire WhatsApp n'est pas prêt")
+    
+    img_data = whatsapp_manager.get_full_screenshot()
+    if not img_data:
+        raise HTTPException(status_code=404, detail="Capture d'écran non disponible")
+        
+    return Response(content=img_data, media_type="image/png")
+
 @app.post("/send")
 def send_message(req: MessageRequest):
     if not whatsapp_manager:

@@ -159,6 +159,15 @@ class WhatsAppManager:
             logger.error(f"Erreur envoi message: {e}")
             return False, str(e)
 
+    def get_full_screenshot(self):
+        if not self.driver:
+            return None
+        try:
+            return self.driver.get_screenshot_as_png()
+        except Exception as e:
+            logger.error(f"Erreur lors de la capture d'écran complète: {e}")
+            return None
+
     def get_status(self):
         return {
             "browser_running": self.driver is not None,
