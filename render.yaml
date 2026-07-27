@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: whatsapp-api
+    env: docker
+    region: frankfurt # Optionnel, choisissez la région la plus proche
+    plan: free # Changez par un plan payant si vous utilisez un disque
+    healthCheckPath: /
+    # Décommentez la section suivante si vous utilisez un plan payant pour conserver la session WhatsApp
+    # disk:
+    #   name: chrome-data
+    #   mountPath: /app/chrome_data
+    #   sizeGB: 1
