@@ -112,9 +112,11 @@ class WhatsAppManager:
             canvas = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "canvas"))
             )
-            # Prend un screenshot de l'élément parent qui contient le QR pour l'avoir en entier
-            qr_container = canvas.find_element(By.XPATH, "..")
-            return qr_container.screenshot_as_png
+            # Extraire l'image directement du canvas via JavaScript pour une netteté absolue
+            # substring(22) supprime le préfixe "data:image/png;base64,"
+            b64_data = self.driver.execute_script("return arguments[0].toDataURL('image/png').substring(22);", canvas)
+            import base64
+            return base64.b64decode(b64_data)
         except TimeoutException:
             logger.warning("Timeout attente QR code")
             return None
